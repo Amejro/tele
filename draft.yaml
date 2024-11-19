@@ -1,0 +1,69 @@
+models:
+  Student:
+    name: string
+    email: string unique
+    student_id: string unique
+    program_id: id foreign:Program
+    telephone: string
+    level: integer
+    program_type:enum: regular, top_up
+    telcost_number: string
+    expected_completion_year: integer
+    relationships:
+      belongsTo: Program
+
+  Program:
+    program_name: string
+    regular_duration: integer
+    top_up_duration: integer nullable
+    has_top_up: boolean
+    school_id: id foreign:School
+    timestamps: true
+    relationships:
+      hasMany: Student
+      belongsTo: School
+
+  School:
+    name: string
+    relationships:
+      hasMany: Program
+
+  ArchivedStudent:
+    name: string
+    email: string unique
+    student_id: string unique
+    program_id: id foreign:Program
+    telephone: string
+    program_type:enum: regular, top_up
+    telcost_number: string
+    expected_completion_year: integer
+    relationships:
+      belongsTo: Program
+# SCHOOL OF ALLIED HEALTH SCIENCES (SAHS) – HO CAMPUS
+# Doctor of Medical Laboratory Science (6 years or 2 year Top-Up)
+# Bachelor of Dietetics
+# Bachelor of Diagnostic Imaging (Radiography)
+# Bachelor of Medical Imaging
+# Bachelor of Physiotherapy
+# Bachelor of Orthotics and Prosthetics
+# Bachelor of Speech, Language and Hearing Sciences
+
+# SCHOOL OF MEDICINE (SOM) – HO CAMPUS
+# Bachelor of Medicine, Bachelor of Surgery (MBChB) (6 years)
+# Bachelor of Dental Surgery (6 years)
+# Bachelor of Physician Assistantship (Clinical) (4 years)
+# Doctor of Psychology (D.Psyc) (6 years)
+
+# SCHOOL OF NURSING AND MIDWIFERY (SONAM) – HO CAMPUS
+# Bachelor of Nursing
+# Bachelor of Midwifery
+# Bachelor of Public Health Nursing
+# Bachelor of Health Services Administration
+
+# F. N. BINKA SCHOOL OF PUBLIC HEALTH (FNBSPH) – HOHOE CAMPUS
+# Bachelor of Public Health (BPH) with the following options:
+
+# Disease Control
+# Health Information
+# Health Promotion
+# Nutrition
