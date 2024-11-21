@@ -3,13 +3,13 @@
 use App\Livewire\StudentForm;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/welcome', function () {
+//     return view('welcome');
+// });
 
-Route::get('student', StudentForm::class);
+Route::get('/', StudentForm::class);
 
-// Route::view('/welcome', 'welcome');
+
 
 
 

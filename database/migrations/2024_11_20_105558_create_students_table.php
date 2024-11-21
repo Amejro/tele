@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -13,15 +12,16 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('archived_students', function (Blueprint $table) {
+        Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('student_id')->unique();
+            $table->string('index_number')->unique();
             $table->foreignId('program_id')->constrained('Programs');
             $table->string('telephone');
-            $table->string('program_type:enum');
-            $table->string('telcost_number');
+            $table->enum('level', ["100", "200", "300", "400", "500", "600"]);
+            $table->enum('program_type', ["regular", "top_up"]);
+            $table->string('telcos_number')->nullable();
             $table->integer('expected_completion_year');
             $table->timestamps();
         });
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('archived_students');
+        Schema::dropIfExists('students');
     }
 };

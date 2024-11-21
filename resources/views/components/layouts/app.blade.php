@@ -20,7 +20,10 @@
     @vite('resources/css/app.css')
 </head>
 
-<body class="antialiased px-10">
+<body class="antialiased max-w-4xl mx-auto px-10 my-20 overflow-y-scroll">
+
+
+
     {{ $slot }}
 
     @livewire('notifications')

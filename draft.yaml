@@ -2,18 +2,18 @@ models:
   Student:
     name: string
     email: string unique
-    student_id: string unique
+    index_number: string unique
     program_id: id foreign:Program
     telephone: string
-    level: integer
-    program_type:enum: regular, top_up
-    telcost_number: string
+    level: enum:100,200,300,400,500,600
+    program_type: enum:regular,top_up
+    telcos_number: string
     expected_completion_year: integer
     relationships:
       belongsTo: Program
 
   Program:
-    program_name: string
+    name: string
     regular_duration: integer
     top_up_duration: integer nullable
     has_top_up: boolean
@@ -34,8 +34,9 @@ models:
     student_id: string unique
     program_id: id foreign:Program
     telephone: string
-    program_type:enum: regular, top_up
-    telcost_number: string
+    program_type: enum:regular, top_up
+    level: enum:100,200,300,400,500,600
+    telcos_number: string
     expected_completion_year: integer
     relationships:
       belongsTo: Program

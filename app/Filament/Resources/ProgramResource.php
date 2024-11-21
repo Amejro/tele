@@ -19,11 +19,13 @@ class ProgramResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?int $navigationSort = 2;
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('program_name')
+                Forms\Components\TextInput::make('name')
                     ->required(),
                 Forms\Components\TextInput::make('regular_duration')
                     ->required()
@@ -42,19 +44,22 @@ class ProgramResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('program_name')
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Program')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('regular_duration')
+                    ->label('Regular Duration (Years)')
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('top_up_duration')
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\IconColumn::make('has_top_up')
                     ->boolean(),
                 Tables\Columns\TextColumn::make('school.name')
                     ->numeric()
-                    ->sortable(),
+                    ->label('School')
+                    ->sortable()->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -95,3 +100,6 @@ class ProgramResource extends Resource
         ];
     }
 }
+
+
+

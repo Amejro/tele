@@ -15,7 +15,7 @@ return new class extends Migration
 
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
-            $table->string('program_name');
+            $table->string('name');
             $table->integer('regular_duration');
             $table->integer('top_up_duration')->nullable();
             $table->boolean('has_top_up');

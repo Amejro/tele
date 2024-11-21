@@ -27,8 +27,9 @@ class ArchivedStudentFactory extends Factory
             'student_id' => $this->faker->word(),
             'program_id' => Program::factory(),
             'telephone' => $this->faker->word(),
-            'program_type:enum' => $this->faker->word(),
-            'telcost_number' => $this->faker->word(),
+            'program_type' => $this->faker->randomElement(["regular",""]),
+            'level' => $this->faker->randomElement(["100","200","300","400","500","600"]),
+            'telcos_number' => $this->faker->word(),
             'expected_completion_year' => $this->faker->numberBetween(-10000, 10000),
         ];
     }

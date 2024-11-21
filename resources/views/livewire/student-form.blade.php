@@ -1,5 +1,10 @@
-<div>
-    <form wire:submit="create" class='space-y-5'>
+<div class=''>
+
+    <h1 style='text-align: center;font-size: large; font-weight: 500; padding: 20px;'>
+        UHAS-Telecel tertiary SIM records
+    </h1>
+
+    <form wire:submit="create" class='space-y-5 '>
         {{ $this->form }}
         {{ $this->publishAction }}
 
@@ -13,5 +18,5 @@
 
 
 
-    <x-filament-actions::modals />
+    <x-filament-actions::modals class='' />
 </div>

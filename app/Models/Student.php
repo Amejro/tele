@@ -18,12 +18,12 @@ class Student extends Model
     protected $fillable = [
         'name',
         'email',
-        'student_id',
+        'index_number',
         'program_id',
         'telephone',
         'level',
-        'program_type:enum',
-        'telcost_number',
+        'program_type',
+        'telcos_number',
         'expected_completion_year',
     ];
 
@@ -40,5 +40,9 @@ class Student extends Model
     public function program(): BelongsTo
     {
         return $this->belongsTo(Program::class);
+    }
+    public function schools()
+    {
+        return School::all()->pluck('name', 'id');
     }
 }

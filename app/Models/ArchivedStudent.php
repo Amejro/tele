@@ -21,8 +21,9 @@ class ArchivedStudent extends Model
         'student_id',
         'program_id',
         'telephone',
-        'program_type:enum',
-        'telcost_number',
+        'program_type',
+        'level',
+        'telcos_number',
         'expected_completion_year',
     ];
 

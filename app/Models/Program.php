@@ -17,7 +17,7 @@ class Program extends Model
      * @var array
      */
     protected $fillable = [
-        'program_name',
+        'name',
         'regular_duration',
         'top_up_duration',
         'has_top_up',

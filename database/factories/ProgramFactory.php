@@ -22,7 +22,7 @@ class ProgramFactory extends Factory
     public function definition(): array
     {
         return [
-            'program_name' => $this->faker->word(),
+            'name' => $this->faker->name(),
             'regular_duration' => $this->faker->numberBetween(-10000, 10000),
             'top_up_duration' => $this->faker->numberBetween(-10000, 10000),
             'has_top_up' => $this->faker->boolean(),

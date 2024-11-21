@@ -13,16 +13,16 @@ return new class extends Migration
     {
         Schema::disableForeignKeyConstraints();
 
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('archived_students', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
             $table->string('student_id')->unique();
             $table->foreignId('program_id')->constrained('Programs');
             $table->string('telephone');
-            $table->integer('level');
-            $table->string('program_type:enum');
-            $table->string('telcost_number');
+            $table->enum('program_type', ["regular",""]);
+            $table->enum('level', ["100","200","300","400","500","600"]);
+            $table->string('telcos_number');
             $table->integer('expected_completion_year');
             $table->timestamps();
         });
@@ -35,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('archived_students');
     }
 };

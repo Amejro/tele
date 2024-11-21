@@ -3,17 +3,17 @@ created:
     - database/factories/ProgramFactory.php
     - database/factories/SchoolFactory.php
     - database/factories/ArchivedStudentFactory.php
-    - database/migrations/2024_11_19_133445_create_students_table.php
-    - database/migrations/2024_11_19_133446_create_programs_table.php
-    - database/migrations/2024_11_19_133447_create_schools_table.php
-    - database/migrations/2024_11_19_133448_create_archived_students_table.php
+    - database/migrations/2024_11_20_105558_create_students_table.php
+    - database/migrations/2024_11_20_105559_create_programs_table.php
+    - database/migrations/2024_11_20_105600_create_schools_table.php
+    - database/migrations/2024_11_20_105601_create_archived_students_table.php
     - app/Models/Student.php
     - app/Models/Program.php
     - app/Models/School.php
     - app/Models/ArchivedStudent.php
 models:
     User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string nullable' }
-    Student: { name: string, email: 'string unique', student_id: 'string unique', program_id: 'id foreign:Program', telephone: string, level: integer, 'program_type:enum': 'regular, top_up', telcost_number: string, expected_completion_year: integer, relationships: { belongsTo: Program } }
-    Program: { program_name: string, regular_duration: integer, top_up_duration: 'integer nullable', has_top_up: boolean, school_id: 'id foreign:School', timestamps: timestamps, relationships: { hasMany: Student, belongsTo: School } }
+    Student: { name: string, email: 'string unique', index_number: 'string unique', program_id: 'id foreign:Program', telephone: string, level: 'enum:100,200,300,400,500,600', program_type: 'enum:regular,top_up', telcos_number: string, expected_completion_year: integer, relationships: { belongsTo: Program } }
+    Program: { name: string, regular_duration: integer, top_up_duration: 'integer nullable', has_top_up: boolean, school_id: 'id foreign:School', timestamps: timestamps, relationships: { hasMany: Student, belongsTo: School } }
     School: { name: string, relationships: { hasMany: Program } }
-    ArchivedStudent: { name: string, email: 'string unique', student_id: 'string unique', program_id: 'id foreign:Program', telephone: string, 'program_type:enum': 'regular, top_up', telcost_number: string, expected_completion_year: integer, relationships: { belongsTo: Program } }
+    ArchivedStudent: { name: string, email: 'string unique', student_id: 'string unique', program_id: 'id foreign:Program', telephone: string, program_type: 'enum:regular, top_up', level: 'enum:100,200,300,400,500,600', telcos_number: string, expected_completion_year: integer, relationships: { belongsTo: Program } }
