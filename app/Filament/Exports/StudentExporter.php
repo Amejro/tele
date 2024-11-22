@@ -14,14 +14,19 @@ class StudentExporter extends Exporter
     public static function getColumns(): array
     {
         return [
+            ExportColumn::make('id')
+                ->label('ID'),
             ExportColumn::make('name'),
+            ExportColumn::make('email'),
             ExportColumn::make('index_number'),
             ExportColumn::make('program.name'),
-            ExportColumn::make('telcos_number'),
-            ExportColumn::make('email'),
+            ExportColumn::make('telephone'),
             ExportColumn::make('level'),
-            ExportColumn::make('expected_completion_year'),
             ExportColumn::make('program_type'),
+            ExportColumn::make('telcos_number'),
+            ExportColumn::make('expected_completion_year'),
+            ExportColumn::make('created_at'),
+            ExportColumn::make('updated_at'),
         ];
     }
 

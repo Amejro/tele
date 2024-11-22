@@ -7,22 +7,30 @@ use Filament\Tables;
 use App\Models\School;
 use App\Models\Student;
 use Filament\Forms\Form;
-use Filament\Tables\Actions\ExportBulkAction;
 use Filament\Tables\Table;
+
 use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\TextInput;
 use Filament\Support\Contracts\HasLabel;
 use App\Filament\Exports\StudentExporter;
+use App\Filament\Imports\StudentImporter;
 use Filament\Forms\Components\DatePicker;
 use Filament\Tables\Actions\ExportAction;
+use Filament\Tables\Actions\ImportAction;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Wizard\Step;
+use Filament\Forms\Components\MarkdownEditor;
+use Filament\Tables\Actions\ExportBulkAction;
 use App\Filament\Resources\StudentResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use App\Filament\Resources\StudentResource\RelationManagers;
+
 
 class StudentResource extends Resource
 {
@@ -128,6 +136,8 @@ class StudentResource extends Resource
             ])
             ->headerActions([
                 ExportAction::make()->exporter(StudentExporter::class),
+                ImportAction::make()->importer(StudentImporter::class),
+
 
             ])
             ->bulkActions([
@@ -135,6 +145,7 @@ class StudentResource extends Resource
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
                 ExportBulkAction::make()->exporter(StudentExporter::class),
+
             ]);
     }
 
@@ -144,6 +155,7 @@ class StudentResource extends Resource
             //
         ];
     }
+
 
     public static function getPages(): array
     {
