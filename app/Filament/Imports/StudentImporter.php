@@ -17,9 +17,10 @@ class StudentImporter extends Importer
         return [
             ImportColumn::make('name'),
             ImportColumn::make('index_number'),
-            ImportColumn::make('program.name')->relationship()->label('Program'),
+            ImportColumn::make('program')->relationship(resolveUsing: 'name'),
             ImportColumn::make('telcos_number'),
             ImportColumn::make('email'),
+            ImportColumn::make('telephone'),
             ImportColumn::make('level'),
             ImportColumn::make('expected_completion_year'),
             ImportColumn::make('program_type'),

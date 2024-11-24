@@ -36,7 +36,7 @@ class AdminPanelProvider extends PanelProvider
                 Pages\Dashboard::class,
             ])
             ->databaseNotifications()
-            ->brandName('Telecel')
+            ->brandName('UHAS-Telecel')
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,

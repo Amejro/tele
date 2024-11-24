@@ -8,7 +8,7 @@ models:
     level: enum:100,200,300,400,500,600
     program_type: enum:regular,top_up
     telcos_number: string
-    expected_completion_year: integer
+    expected_completion_year: year #changed from int to year
     relationships:
       belongsTo: Program
 

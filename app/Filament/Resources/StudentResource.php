@@ -94,9 +94,10 @@ class StudentResource extends Resource
                     ->label('Telcel Number')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('expected_completion_year')
-
                     ->numeric()
-                    ->sortable(),
+                    ->sortable()
+
+                ,
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

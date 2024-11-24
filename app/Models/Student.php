@@ -35,6 +35,7 @@ class Student extends Model
     protected $casts = [
         'id' => 'integer',
         'program_id' => 'integer',
+
     ];
 
     public function program(): BelongsTo
