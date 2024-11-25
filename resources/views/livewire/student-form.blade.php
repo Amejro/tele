@@ -1,8 +1,20 @@
-<div class=''>
+<div class='' style=' margin-top: 50px;
+    margin-bottom: 50px;'>
 
-    <h1 style='text-align: center;font-size: large; font-weight: 500; padding: 20px;'>
-        UHAS-Telecel tertiary SIM records
-    </h1>
+    <!-- display: flex
+;
+    flex-direction: column;
+    justify-items: center; -->
+
+    <div style='
+flex-direction: column; justify-items: center; '>
+
+        <img src="{{URL::asset('uhas-telecel.png')}}" alt="Uhas_telecel logo" height="100" width="100">
+
+        <h1 style='text-align: center;font-size: large; font-weight: 500; padding: 20px;'>
+            UHAS-Telecel tertiary SIM records
+        </h1>
+    </div>
 
     <form wire:submit="create" class='space-y-5 '>
         {{ $this->form }}
