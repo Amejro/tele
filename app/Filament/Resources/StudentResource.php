@@ -78,7 +78,7 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
-                    ->searchable(),
+                    ->searchable()->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('index_number')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('program.name')
