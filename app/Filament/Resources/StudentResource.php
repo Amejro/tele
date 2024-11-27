@@ -64,8 +64,12 @@ class StudentResource extends Resource
 
                 Select::make('level')->options(Level::class)
                     ->required(),
+
+                Select::make('status')->options(Status::class)
+                    ->required(),
+
                 Radio::make('program_type')
-                    ->options(ProgramType::class)->columns(2),
+                    ->options(ProgramType::class)->columns(2)->required(),
                 TextInput::make('telcos_number')->tel()->required(),
                 TextInput::make('expected_completion_year')->required()->numeric(),
             ]);
@@ -84,6 +88,8 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('program.name')
                     ->numeric()
                     ->sortable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('telephone')
                     ->searchable()->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('level')
@@ -182,7 +188,21 @@ enum ProgramType: string implements HasLabel
     }
 }
 
-// 100,200,300,400,500,600
+
+enum Status: string implements HasLabel
+{
+    case Active = 'active';
+    case Graduating = 'graduating';
+    case Graduated = 'graduated';
+
+    public function getLabel(): ?string
+    {
+        return $this->name;
+
+    }
+}
+
+
 enum Level: string implements HasLabel
 {
     case Level_100 = '100';
