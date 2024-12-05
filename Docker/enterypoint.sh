@@ -2,7 +2,7 @@
 
 # Install composer
 if [ ! -f "vendor/autoload.php" ]; then
-   composer install --no-interaction --no-progress
+    composer install --no-interaction --no-progress
 fi
 
 if [ ! -f ".env" ]; then
