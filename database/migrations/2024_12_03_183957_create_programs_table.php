@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('regular_duration');
             $table->integer('top_up_duration')->nullable();
             $table->boolean('has_top_up');
+            $table->string('program_code');
             $table->foreignId('school_id')->constrained('Schools');
             $table->timestamps();
         });

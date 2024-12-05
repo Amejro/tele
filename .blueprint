@@ -3,17 +3,21 @@ created:
     - database/factories/ProgramFactory.php
     - database/factories/SchoolFactory.php
     - database/factories/ArchivedStudentFactory.php
-    - database/migrations/2024_11_20_105558_create_students_table.php
-    - database/migrations/2024_11_20_105559_create_programs_table.php
-    - database/migrations/2024_11_20_105600_create_schools_table.php
-    - database/migrations/2024_11_20_105601_create_archived_students_table.php
+    - database/factories/JobRunYearFactory.php
+    - database/migrations/2024_12_03_183956_create_students_table.php
+    - database/migrations/2024_12_03_183957_create_programs_table.php
+    - database/migrations/2024_12_03_183958_create_schools_table.php
+    - database/migrations/2024_12_03_183959_create_archived_students_table.php
+    - database/migrations/2024_12_03_184000_create_job_run_years_table.php
     - app/Models/Student.php
     - app/Models/Program.php
     - app/Models/School.php
     - app/Models/ArchivedStudent.php
+    - app/Models/JobRunYear.php
 models:
     User: { name: string, email: string, email_verified_at: 'datetime nullable', password: string, remember_token: 'string nullable' }
-    Student: { name: string, email: 'string unique', index_number: 'string unique', program_id: 'id foreign:Program', telephone: string, level: 'enum:100,200,300,400,500,600', program_type: 'enum:regular,top_up', telcos_number: string, expected_completion_year: integer, relationships: { belongsTo: Program } }
-    Program: { name: string, regular_duration: integer, top_up_duration: 'integer nullable', has_top_up: boolean, school_id: 'id foreign:School', timestamps: timestamps, relationships: { hasMany: Student, belongsTo: School } }
-    School: { name: string, relationships: { hasMany: Program } }
-    ArchivedStudent: { name: string, email: 'string unique', student_id: 'string unique', program_id: 'id foreign:Program', telephone: string, program_type: 'enum:regular, top_up', level: 'enum:100,200,300,400,500,600', telcos_number: string, expected_completion_year: integer, relationships: { belongsTo: Program } }
+    Student: { name: string, email: 'string unique', index_number: 'string unique', program_id: 'id foreign:Program', telephone: string, level: 'enum:100,200,300,400,500,600', program_type: 'enum:regular,top_up', telcos_number: string, serial_number: string, expected_completion_year: year, relationships: { belongsTo: Program } }
+    Program: { name: string, regular_duration: integer, top_up_duration: 'integer nullable', has_top_up: boolean, program_code: string, school_id: 'id foreign:School', timestamps: timestamps, relationships: { hasMany: Student, belongsTo: School } }
+    School: { name: string, timestamps: timestamps, relationships: { hasMany: Program } }
+    ArchivedStudent: { name: string, email: 'string unique', index_number: 'string unique', program_id: 'id foreign:Program', telephone: string, level: 'enum:100,200,300,400,500,600', program_type: 'enum:regular,top_up', telcos_number: string, serial_number: string, expected_completion_year: year, relationships: { belongsTo: Program } }
+    JobRunYear: { year: 'year unique', timestamps: timestamps }

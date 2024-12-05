@@ -26,6 +26,7 @@ class ProgramFactory extends Factory
             'regular_duration' => $this->faker->numberBetween(-10000, 10000),
             'top_up_duration' => $this->faker->numberBetween(-10000, 10000),
             'has_top_up' => $this->faker->boolean(),
+            'program_code' => $this->faker->word(),
             'school_id' => School::factory(),
         ];
     }

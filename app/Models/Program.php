@@ -21,6 +21,7 @@ class Program extends Model
         'regular_duration',
         'top_up_duration',
         'has_top_up',
+        'program_code',
         'school_id',
     ];
 

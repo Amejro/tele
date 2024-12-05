@@ -18,12 +18,13 @@ class ArchivedStudent extends Model
     protected $fillable = [
         'name',
         'email',
-        'student_id',
+        'index_number',
         'program_id',
         'telephone',
-        'program_type',
         'level',
+        'program_type',
         'telcos_number',
+        'serial_number',
         'expected_completion_year',
     ];
 

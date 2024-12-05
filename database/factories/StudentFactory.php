@@ -30,7 +30,8 @@ class StudentFactory extends Factory
             'level' => $this->faker->randomElement(["100","200","300","400","500","600"]),
             'program_type' => $this->faker->randomElement(["regular","top_up"]),
             'telcos_number' => $this->faker->word(),
-            'expected_completion_year' => $this->faker->numberBetween(-10000, 10000),
+            'serial_number' => $this->faker->word(),
+            'expected_completion_year' => $this->faker->year(),
         ];
     }
 }

@@ -24,6 +24,8 @@ class Student extends Model
         'level',
         'program_type',
         'telcos_number',
+        'serial_number',
+        'status',
         'expected_completion_year',
     ];
 
@@ -35,15 +37,19 @@ class Student extends Model
     protected $casts = [
         'id' => 'integer',
         'program_id' => 'integer',
-
     ];
 
     public function program(): BelongsTo
     {
         return $this->belongsTo(Program::class);
     }
-    public function schools()
+
+    protected static function booted()
     {
-        return School::all()->pluck('name', 'id');
+        static::creating(function ($model) {
+
+
+            $model->status = 'graduating';
+        });
     }
 }

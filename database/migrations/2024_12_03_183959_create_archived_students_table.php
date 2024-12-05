@@ -17,13 +17,14 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->string('student_id')->unique();
+            $table->string('index_number')->unique();
             $table->foreignId('program_id')->constrained('Programs');
             $table->string('telephone');
-            $table->enum('program_type', ["regular",""]);
             $table->enum('level', ["100","200","300","400","500","600"]);
+            $table->enum('program_type', ["regular","top_up"]);
             $table->string('telcos_number');
-            $table->integer('expected_completion_year');
+            $table->string('serial_number');
+            $table->year('expected_completion_year');
             $table->timestamps();
         });
 

@@ -8,6 +8,7 @@ models:
     level: enum:100,200,300,400,500,600
     program_type: enum:regular,top_up
     telcos_number: string
+    serial_number: string
     expected_completion_year: year #changed from int to year
     relationships:
       belongsTo: Program
@@ -17,6 +18,7 @@ models:
     regular_duration: integer
     top_up_duration: integer nullable
     has_top_up: boolean
+    program_code: string
     school_id: id foreign:School
     timestamps: true
     relationships:
@@ -25,21 +27,27 @@ models:
 
   School:
     name: string
+    timestamps: true
     relationships:
       hasMany: Program
 
   ArchivedStudent:
     name: string
     email: string unique
-    student_id: string unique
+    index_number: string unique
     program_id: id foreign:Program
     telephone: string
-    program_type: enum:regular, top_up
     level: enum:100,200,300,400,500,600
+    program_type: enum:regular,top_up
     telcos_number: string
-    expected_completion_year: integer
+    serial_number: string
+    expected_completion_year: year #changed from int to year
     relationships:
       belongsTo: Program
+
+  JobRunYear:
+    year: year unique
+    timestamps: true
 # SCHOOL OF ALLIED HEALTH SCIENCES (SAHS) – HO CAMPUS
 # Doctor of Medical Laboratory Science (6 years or 2 year Top-Up)
 # Bachelor of Dietetics

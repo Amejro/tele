@@ -20,9 +20,10 @@ return new class extends Migration {
             $table->foreignId('program_id')->constrained('Programs');
             $table->string('telephone');
             $table->enum('level', ["100", "200", "300", "400", "500", "600"]);
-            $table->enum('status', ["active", "graduating", "graduated"])->default("active");
             $table->enum('program_type', ["regular", "top_up"]);
-            $table->string('telcos_number')->nullable();
+            $table->enum('status', ["active", "graduating", "graduated"]);
+            $table->string('telcos_number');
+            $table->string('serial_number');
             $table->year('expected_completion_year');
             $table->timestamps();
         });

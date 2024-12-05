@@ -57,20 +57,21 @@ class StudentResource extends Resource
                     ->tel()
                     ->required(),
 
-                Select::make('name')
-                    ->model(School::class)
-                    ->label('School')
-                    ->required(),
+                // Select::make('name')
+                //     ->model(School::class)
+                //     ->label('School')
+                // ,
 
                 Select::make('level')->options(Level::class)
                     ->required(),
 
-                Select::make('status')->options(Status::class)
-                    ->required(),
+                Select::make('status')->options(Status::class)->required(),
 
                 Radio::make('program_type')
                     ->options(ProgramType::class)->columns(2)->required(),
                 TextInput::make('telcos_number')->tel()->required(),
+                TextInput::make('serial_number')
+                    ->required(),
                 TextInput::make('expected_completion_year')->required()->numeric(),
             ]);
     }
@@ -97,12 +98,12 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('program_type')
                     ->searchable()->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('telcos_number')
-                    ->label('Telcel Number')
-                    ->searchable(),
+                    ->label('Telcel Number'),
                 Tables\Columns\TextColumn::make('expected_completion_year')
-                    ->numeric()
                     ->sortable()
+                ,
 
+                Tables\Columns\TextColumn::make('serial_number')
                 ,
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

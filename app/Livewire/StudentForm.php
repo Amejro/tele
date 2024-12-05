@@ -109,6 +109,8 @@ class StudentForm extends Component implements HasForms, HasActions
                             })
                             ->required(),
 
+
+
                         Radio::make('program_type')
                             ->options(ProgramType::class)->columns(2),
 
@@ -123,6 +125,10 @@ class StudentForm extends Component implements HasForms, HasActions
                             ->label('Telcel Number')
                             ->tel()
                         ,
+
+
+                        TextInput::make('serial_number')
+                            ->required(),
 
 
                     ])->columns(2),
@@ -186,7 +192,18 @@ enum ProgramType: string implements HasLabel
     }
 }
 
-// 100,200,300,400,500,600
+enum Status: string implements HasLabel
+{
+    case Active = 'active';
+    case Graduating = 'graduating';
+    case Graduated = 'graduated';
+
+    public function getLabel(): ?string
+    {
+        return $this->name;
+
+    }
+}
 enum Level: string implements HasLabel
 {
     case Level_100 = '100';

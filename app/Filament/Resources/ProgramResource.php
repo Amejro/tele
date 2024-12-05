@@ -27,6 +27,9 @@ class ProgramResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required(),
+
+                Forms\Components\TextInput::make('program_code')
+                    ->required(),
                 Forms\Components\TextInput::make('regular_duration')
                     ->required()
                     ->numeric(),
