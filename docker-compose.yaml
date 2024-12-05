@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 services:
   php:
     build:
@@ -7,15 +7,15 @@ services:
       args:
         - App_ENV=${APP_ENV}
     environment:
-      - APP_ENV=${APP_ENV}   
+      - APP_ENV=${APP_ENV}
       - CONTAINER_ROLE=app
     working_dir: /var/www
     volumes:
-      - .:/var/www 
+      - .:/var/www
     ports:
       - "8000:8000"
-    depends_on: 
-      - database 
+    depends_on:
+      - database
 
   database:
     image: mysql:8.0
@@ -27,8 +27,8 @@ services:
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - db_data:/var/lib/mysql  
-    ports:    
+      - db_data:/var/lib/mysql
+    ports:
       - "3306:3306"
 
   node:
@@ -38,21 +38,21 @@ services:
     volumes:
       - .:/user/src
       - ./node_modules:/usr/src/node_modules
-    tty: true 
+    tty: true
 
   queue:
     build:
       context: .
       target: php
     args:
-        - App_ENV=${APP_ENV}
+      - App_ENV=${APP_ENV}
     environment:
-      - APP_ENV=${APP_ENV}   
+      - APP_ENV=${APP_ENV}
       - CONTAINER_ROLE=queue
     working_dir: /var/www
     volumes:
       - .:/var/www
 
-
 volumes:
-  db_data: -
+  db_data:
+    driver: local
