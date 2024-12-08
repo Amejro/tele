@@ -9,6 +9,7 @@ use App\Models\Student;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
 
+use App\Models\ArchivedStudent;
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
@@ -16,6 +17,7 @@ use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\TextInput;
+use Filament\Notifications\Notification;
 use Filament\Support\Contracts\HasLabel;
 use App\Filament\Exports\StudentExporter;
 use App\Filament\Imports\StudentImporter;
@@ -26,6 +28,7 @@ use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Wizard\Step;
 use Filament\Forms\Components\MarkdownEditor;
+use Filament\Resources\Pages\ListRecords\Tab;
 use Filament\Tables\Actions\ExportBulkAction;
 use App\Filament\Resources\StudentResource\Pages;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -38,6 +41,8 @@ class StudentResource extends Resource
     protected static ?int $navigationSort = 1;
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
+
+    protected static ?string $recordTitleAttribute = 'index_number';
 
     public static function form(Form $form): Form
     {
@@ -81,26 +86,26 @@ class StudentResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->searchable(),
+                // ->searchable()
+                ,
                 Tables\Columns\TextColumn::make('email')
-                    ->searchable()->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('index_number')
-                    ->searchable(),
+                // ->searchable()
+                ,
                 Tables\Columns\TextColumn::make('program.name')
-                    ->numeric()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('status')
-                    ->searchable(),
+                    ->numeric(),
+                Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\TextColumn::make('telephone')
-                    ->searchable()->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('level')
-                    ->searchable(),
+                ,
                 Tables\Columns\TextColumn::make('program_type')
-                    ->searchable()->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('telcos_number')
                     ->label('Telcel Number'),
                 Tables\Columns\TextColumn::make('expected_completion_year')
-                    ->sortable()
+
                 ,
 
                 Tables\Columns\TextColumn::make('serial_number')
@@ -145,6 +150,59 @@ class StudentResource extends Resource
             ->headerActions([
                 ExportAction::make()->exporter(StudentExporter::class),
                 ImportAction::make()->importer(StudentImporter::class),
+                Action::make('Archive Students')
+                    ->databaseTransaction(function () {
+
+
+                        // dd($this->activeTab);
+            
+
+
+
+                        $graduatingStudents = Student::where('status', 'graduating')->get();
+
+                        if ($graduatingStudents->isEmpty()) {
+                            Notification::make()
+                                ->title('There are no Graduating Students to archive')
+                                ->danger()
+                                ->send();
+
+                            return;
+                        }
+
+                        $archiveStudet = new ArchivedStudent();
+
+                        foreach ($graduatingStudents as $graduatingStudent) {
+
+                            $archiveStudet->create([
+                                'name' => $graduatingStudent->name,
+                                'email' => $graduatingStudent->email,
+                                'index_number' => $graduatingStudent->index_number,
+                                'program_id' => $graduatingStudent->program_id,
+                                'telephone' => $graduatingStudent->telephone,
+                                "status" => "graduated",
+                                'level' => $graduatingStudent->level,
+                                'program_type' => $graduatingStudent->program_type,
+                                'telcos_number' => $graduatingStudent->telcos_number,
+                                'serial_number' => $graduatingStudent->serial_number,
+                                'expected_completion_year' => $graduatingStudent->expected_completion_year,
+                                'registered_at' => $graduatingStudent->created_at,
+                                'last_updated_at' => $graduatingStudent->updated_at,
+                            ]);
+
+                            Student::where('id', $graduatingStudent->id)->delete();
+
+                        };
+
+                        Notification::make()
+                            ->title('All Graduating Students have been archived')
+                            ->success()
+                            ->send();
+                    })
+                    ->hidden(function () {
+                        return Student::where('status', 'graduating')->get()->isEmpty();
+                    })
+                ,
 
 
             ])
@@ -154,8 +212,12 @@ class StudentResource extends Resource
                 ]),
                 ExportBulkAction::make()->exporter(StudentExporter::class),
 
-            ]);
+            ])
+
+        ;
     }
+
+
 
     public static function getRelations(): array
     {
@@ -194,7 +256,7 @@ enum Status: string implements HasLabel
 {
     case Active = 'active';
     case Graduating = 'graduating';
-    case Graduated = 'graduated';
+    // case Graduated = 'graduated';
 
     public function getLabel(): ?string
     {

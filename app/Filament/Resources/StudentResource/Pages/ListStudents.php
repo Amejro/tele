@@ -29,7 +29,7 @@ class ListStudents extends ListRecords
 
             'Graduating' => Tab::make()->modifyQueryUsing(fn(Builder $query) => $query->where('status', '=', 'graduating'))->badge(Student::query()->where('status', '=', 'graduating')->count()),
 
-            'Graduated' => Tab::make()->modifyQueryUsing(fn(Builder $query) => $query->where('status', '=', 'graduated'))->badge(Student::query()->where('status', '=', 'graduated')->count()),
+            // 'Graduated' => Tab::make()->modifyQueryUsing(fn(Builder $query) => $query->where('status', '=', 'graduated'))->badge(Student::query()->where('status', '=', 'graduated')->count()),
 
         ];
 

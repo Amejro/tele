@@ -17,7 +17,7 @@ class ProgramResource extends Resource
 {
     protected static ?string $model = Program::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-rectangle-group';
 
     protected static ?int $navigationSort = 2;
 
@@ -50,6 +50,8 @@ class ProgramResource extends Resource
                 Tables\Columns\TextColumn::make('name')
                     ->label('Program')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('program_code')
+                    ->label('Code'),
                 Tables\Columns\TextColumn::make('regular_duration')
                     ->label('Regular Duration (Years)')
                     ->numeric()

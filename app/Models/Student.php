@@ -46,10 +46,8 @@ class Student extends Model
 
     protected static function booted()
     {
-        static::creating(function ($model) {
-
-
-            $model->status = 'graduating';
-        });
+        // static::creating(function ($model) {
+        //     $model->status = 'active';
+        // });
     }
 }
