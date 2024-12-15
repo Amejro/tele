@@ -27,6 +27,7 @@ use Filament\Tables\Actions\ImportAction;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Forms\Components\Wizard\Step;
+use Illuminate\Contracts\Support\Htmlable;
 use Filament\Forms\Components\MarkdownEditor;
 use Filament\Resources\Pages\ListRecords\Tab;
 use Filament\Tables\Actions\ExportBulkAction;
@@ -43,7 +44,13 @@ class StudentResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $recordTitleAttribute = 'index_number';
+    //     public static function getGlobalSearchResultDetails(Student $record): array
+// {
+//     return [
+//         'name' => $record->author->name,
 
+    //     ];
+// }
     public static function form(Form $form): Form
     {
         return $form
