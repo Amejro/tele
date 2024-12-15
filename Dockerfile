@@ -2,24 +2,28 @@ FROM serversideup/php:8.3-fpm-nginx
 
 ENV PHP_OPCACHE_ENABLE=1
 
- USER root
+USER root
 
-WORKDIR /var/www
-COPY . .
-COPY --from=composer:2.8.2 /usr/bin/composer /usr/bin/composer
+# Install Node.js
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get update \
+    && apt-get install -y nodejs \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -
-RUN apt-get install -y nodejs
+# Copy application files
+COPY --chown=www-data:www-data . /var/www/html
 
-# COPY --chown=www-data:www-data . /var/www/html
-
-RUN composer install --no-interaction --optimize-autoloader --no-dev
-
-COPY .env.example .env
-
+# Switch to non-root user
 USER www-data
 
+# Install dependencies and build
+RUN npm ci \
+    && npm run build \
+    && rm -rf /var/www/html/.npm
 
-RUN npm install
-RUN npm run build
+# Install PHP dependencies
+RUN composer install --no-interaction --optimize-autoloader --no-dev
 
+# Remove composer cache
+RUN rm -rf /var/www/html/.composer/cache
