@@ -4,14 +4,23 @@ ENV PHP_OPCACHE_ENABLE=1
 
 USER root
 
-RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -
-RUN apt-get install -y nodejs
+# Install Node.js
+RUN curl -sL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs
 
+# Install global npm packages as root
+RUN npm install --global cross-env
+
+# Copy application files
 COPY --chown=www-data:www-data . /var/www/html
 
-USER www-data
+# Switch to working directory
+WORKDIR /var/www/html
 
-RUN npm install --global cross-env
+# Install dependencies and build as www-data
+USER www-data
+RUN npm install
 RUN npm run build
 
+# Install PHP dependencies
 RUN composer install --no-interaction --optimize-autoloader --no-dev
