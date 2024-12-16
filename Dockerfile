@@ -4,6 +4,9 @@ ENV PHP_OPCACHE_ENABLE=1
 
 USER root
 
+WORKDIR /var/www
+COPY . .
+
 # Install PHP dependencies
 RUN composer install --no-interaction --optimize-autoloader --no-dev
 
