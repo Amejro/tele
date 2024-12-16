@@ -1,17 +1,28 @@
-FROM serversideup/php:8.3-fpm-nginx
+FROM dunglas/frankenphp
 
-ENV PHP_OPCACHE_ENABLE=1
+RUN install-php-extensions \
+    pdo_mysql \
+    gd \
+    intl \
+    zip \
+    opcache
 
-USER root
+# Be sure to replace "your-domain-name.example.com" by your domain name
+ENV SERVER_NAME=your-domain-name.example.com
+# If you want to disable HTTPS, use this value instead:
+#ENV SERVER_NAME=:80
 
-RUN curl -sL https://deb.nodesource.com/setup_20.x | bash -
-RUN apt-get install -y nodejs
+# Enable PHP production settings
+RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
 
-COPY --chown=www-data:www-data . /var/www/html
+# Copy the PHP files of your project in the public directory
+COPY . /app
 
-USER www-data
+COPY --from=composer:2.8.2 /usr/bin/composer /usr/bin/composer
 
+RUN composer install --no-interaction --no-progress
+
+COPY .env.example .env
+
+RUN npm install --global cross-env
 RUN npm install
-RUN npm run build
-
-RUN composer install --no-interaction --optimize-autoloader --no-dev
