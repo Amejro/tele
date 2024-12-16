@@ -8,7 +8,9 @@ RUN install-php-extensions \
     opcache
 
 # Be sure to replace "your-domain-name.example.com" by your domain name
-ENV SERVER_NAME=your-domain-name.example.com
+
+ENV SERVER_NAME=coolify.amejro.tech
+
 # If you want to disable HTTPS, use this value instead:
 #ENV SERVER_NAME=:80
 
