@@ -4,7 +4,7 @@ ENV PHP_OPCACHE_ENABLE=1
 
 USER root
 
-RUN docker-php-ext-install intl
+RUN docker-php-ext-install intl icu-uc icu-io icu-i18n
 
 WORKDIR /var/www
 COPY . .
