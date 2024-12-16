@@ -9,10 +9,10 @@ RUN install-php-extensions \
 
 # Be sure to replace "your-domain-name.example.com" by your domain name
 
-ENV SERVER_NAME=utele.amejro.tech
+# ENV SERVER_NAME=utele.amejro.tech
 
 # If you want to disable HTTPS, use this value instead:
-#ENV SERVER_NAME=:80
+ENV SERVER_NAME=:80
 
 # Enable PHP production settings
 RUN mv "$PHP_INI_DIR/php.ini-production" "$PHP_INI_DIR/php.ini"
