@@ -4,6 +4,12 @@ ENV PHP_OPCACHE_ENABLE=1
 
 USER root
 
+# Install PHP dependencies
+RUN composer install --no-interaction --optimize-autoloader --no-dev
+
+# Remove composer cache
+RUN rm -rf /var/www/html/.composer/cache
+
 # Install Node.js
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
     && apt-get update \
@@ -22,8 +28,4 @@ RUN npm ci \
     && npm run build \
     && rm -rf /var/www/html/.npm
 
-# Install PHP dependencies
-RUN composer install --no-interaction --optimize-autoloader --no-dev
 
-# Remove composer cache
-RUN rm -rf /var/www/html/.composer/cache
