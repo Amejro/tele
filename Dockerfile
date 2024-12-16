@@ -9,7 +9,7 @@ RUN install-php-extensions \
 
 # Be sure to replace "your-domain-name.example.com" by your domain name
 
-ENV SERVER_NAME=amejro.tech
+ENV SERVER_NAME=utele.amejro.tech
 
 # If you want to disable HTTPS, use this value instead:
 #ENV SERVER_NAME=:80
