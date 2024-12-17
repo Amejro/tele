@@ -2,16 +2,22 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\ArchivedStudentResource\Pages;
-use App\Filament\Resources\ArchivedStudentResource\RelationManagers;
-use App\Models\ArchivedStudent;
 use Filament\Forms;
-use Filament\Forms\Form;
-use Filament\Resources\Resource;
 use Filament\Tables;
+use App\Models\Student;
+use Filament\Forms\Form;
 use Filament\Tables\Table;
+use App\Models\ArchivedStudent;
+use Filament\Resources\Resource;
+use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Notifications\Notification;
+use Filament\Tables\Actions\ActionGroup;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use App\Filament\Resources\ArchivedStudentResource\Pages;
+use App\Filament\Resources\ArchivedStudentResource\RelationManagers;
 
 class ArchivedStudentResource extends Resource
 {
@@ -97,8 +103,28 @@ class ArchivedStudentResource extends Resource
                 //
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    Action::make('reactivate')
+                        ->label('Reactivate')
+                        ->requiresConfirmation()
+                        ->icon('heroicon-o-check-badge')
+                        ->action(function (ArchivedStudent $record, Action $action) {
+                            Student::create($record->toArray());
+                            $record->delete();
+                        })
+                        ->successNotification(
+                            Notification::make()
+                                ->success()
+                                ->title('Student Reactivated')
+                                ->body('The user has been created successfully.'),
+                        )
+
+                    // ->failureNotificationTitle('Failed to Reactivate Student')
+                    ,
+                ])
+
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
