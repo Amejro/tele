@@ -17,7 +17,8 @@ return new class extends Migration {
             $table->string('name');
             $table->string('email');
             $table->string('index_number');
-            $table->foreignId('program_id')->constrained('Programs');
+            // $table->foreignId('program_id')->constrained('Programs');
+            $table->foreignId('program_id')->constrained()->nullOnDelete();
             $table->string('telephone');
             $table->enum('level', ["100", "200", "300", "400", "500", "600"]);
             $table->enum('program_type', ["regular", "top_up"]);
