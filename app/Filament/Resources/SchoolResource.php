@@ -26,6 +26,8 @@ class SchoolResource extends Resource
             ->schema([
                 Forms\Components\TextInput::make('name')
                     ->required(),
+                Forms\Components\TextInput::make('code')
+                    ->required(),
             ]);
     }
 
@@ -34,6 +36,8 @@ class SchoolResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('code')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

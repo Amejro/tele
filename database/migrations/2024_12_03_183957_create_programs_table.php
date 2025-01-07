@@ -15,10 +15,10 @@ return new class extends Migration {
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('regular_duration');
-            $table->integer('top_up_duration')->nullable();
-            $table->boolean('has_top_up');
-            $table->string('program_code');
+            $table->integer('duration');
+            // $table->integer('top_up_duration')->nullable();
+            // $table->boolean('has_top_up');
+            $table->string('program_code')->nullable();
             // $table->foreignId('school_id')->constrained('Schools');
             $table->foreignId('school_id')->constrained()->nullOnDelete();
             $table->timestamps();

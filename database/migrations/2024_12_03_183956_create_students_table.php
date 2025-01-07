@@ -22,7 +22,7 @@ return new class extends Migration {
 
             $table->string('telephone');
             $table->enum('level', ["100", "200", "300", "400", "500", "600"]);
-            $table->enum('program_type', ["regular", "top_up"]);
+            // $table->enum('program_type', ["regular", "top_up"]);
             $table->enum('status', ["active", "graduating", "graduated"])->default('active');
             $table->string('telcos_number');
             $table->string('serial_number');

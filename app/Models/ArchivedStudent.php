@@ -22,7 +22,6 @@ class ArchivedStudent extends Model
         'program_id',
         'telephone',
         'level',
-        'program_type',
         'telcos_number',
         'serial_number',
         'expected_completion_year',

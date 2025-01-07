@@ -28,15 +28,10 @@ class ProgramResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->required(),
 
-                Forms\Components\TextInput::make('program_code')
-                    ->required(),
-                Forms\Components\TextInput::make('regular_duration')
+                Forms\Components\TextInput::make('program_code'),
+                Forms\Components\TextInput::make('duration')
                     ->required()
                     ->numeric(),
-                Forms\Components\TextInput::make('top_up_duration')
-                    ->numeric(),
-                Forms\Components\Toggle::make('has_top_up')
-                    ->required(),
                 Forms\Components\Select::make('school_id')
                     ->relationship('school', 'name')
                     ->required(),
@@ -52,15 +47,10 @@ class ProgramResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('program_code')
                     ->label('Code'),
-                Tables\Columns\TextColumn::make('regular_duration')
-                    ->label('Regular Duration (Years)')
+                Tables\Columns\TextColumn::make('duration')
+                    ->label('Duration (Years)')
                     ->numeric()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('top_up_duration')
-                    ->numeric()
-                    ->sortable()->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\IconColumn::make('has_top_up')
-                    ->boolean(),
                 Tables\Columns\TextColumn::make('school.name')
                     ->numeric()
                     ->label('School')

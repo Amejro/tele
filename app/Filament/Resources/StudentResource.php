@@ -84,9 +84,9 @@ class StudentResource extends Resource
 
                 Select::make('status')->options(Status::class)->required(),
 
-                Radio::make('program_type')
-                    ->options(ProgramType::class)->columns(2)->required(),
-                TextInput::make('telcos_number')->tel()->required(),
+                // Radio::make('program_type')
+                //     ->options(ProgramType::class)->columns(2)->required(),
+                TextInput::make('telcos_number')->tel()->required()->label('Telecel number'),
                 TextInput::make('serial_number')
                     ->required(),
                 TextInput::make('expected_completion_year')->required()->numeric(),
@@ -112,8 +112,8 @@ class StudentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('level')
                 ,
-                Tables\Columns\TextColumn::make('program_type')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('program_type')
+                //     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('telcos_number')
                     ->label('Telcel Number'),
                 Tables\Columns\TextColumn::make('expected_completion_year')
