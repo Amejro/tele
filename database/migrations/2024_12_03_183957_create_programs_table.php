@@ -10,17 +10,19 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
+        //Schema::disableForeignKeyConstraints();
 
         Schema::create('programs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
             $table->integer('duration');
+            $table->unsignedBigInteger('school_id');
             // $table->integer('top_up_duration')->nullable();
             // $table->boolean('has_top_up');
             $table->string('program_code')->nullable();
-            // $table->foreignId('school_id')->constrained('Schools');
-            $table->foreignId('school_id')->constrained()->nullOnDelete();
+            $table->foreignId('school_id')->references('id')->on('schools')->onDelete('cascade');
+
+            //$table->foreignId('school_id')->constrained()->nullOnDelete();
             $table->timestamps();
         });
 

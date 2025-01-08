@@ -14,12 +14,12 @@ return new class extends Migration {
 
         Schema::create('students', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('program_id');
+
             $table->string('name');
             $table->string('email')->unique();
             $table->string('index_number')->unique();
-            // $table->foreignId('program_id')->constrained('Programs');
-            $table->foreignId('program_id')->constrained()->nullOnDelete();
-
+            $table->foreignId('program_id')->references('id')->on('programs')->onDelete('cascade');
             $table->string('telephone');
             $table->enum('level', ["100", "200", "300", "400", "500", "600"]);
             // $table->enum('program_type', ["regular", "top_up"]);
