@@ -13,4 +13,4 @@ Schedule::command('app:promote-student-scheduled')->everyMinute()->sendOutputTo(
 
 
 
-Schedule::job(new PromoteStudentJob)->weekly()->where();
+Schedule::job(new PromoteStudentJob)->weekly();

@@ -23,7 +23,7 @@ class StudentImporter extends Importer
             ImportColumn::make('telephone'),
             ImportColumn::make('level'),
             ImportColumn::make('expected_completion_year'),
-            ImportColumn::make('program_type'),
+            // ImportColumn::make('program_type'),
             ImportColumn::make('serial_number'),
         ];
     }
