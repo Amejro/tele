@@ -18,9 +18,7 @@ class Program extends Model
      */
     protected $fillable = [
         'name',
-        'regular_duration',
-        'top_up_duration',
-        'has_top_up',
+        'duration',
         'program_code',
         'school_id',
     ];
@@ -32,7 +30,6 @@ class Program extends Model
      */
     protected $casts = [
         'id' => 'integer',
-        'has_top_up' => 'boolean',
         'school_id' => 'integer',
     ];
 

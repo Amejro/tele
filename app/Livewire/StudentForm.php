@@ -111,8 +111,8 @@ class StudentForm extends Component implements HasForms, HasActions
 
 
 
-                        Radio::make('program_type')
-                            ->options(ProgramType::class)->columns(2),
+                        // Radio::make('program_type')
+                        //     ->options(ProgramType::class)->columns(2),
 
                         TextInput::make('expected_completion_year')
                             ->required()

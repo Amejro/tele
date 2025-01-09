@@ -8,20 +8,25 @@ use App\Models\School;
 use App\Models\Student;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
-
 use App\Models\ArchivedStudent;
+
+
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Toggle;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\ViewAction;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Support\Contracts\HasLabel;
+use Filament\Tables\Actions\ActionGroup;
 use App\Filament\Exports\StudentExporter;
 use App\Filament\Imports\StudentImporter;
 use Filament\Forms\Components\DatePicker;
+use Filament\Tables\Actions\DeleteAction;
 use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Actions\ImportAction;
 use Filament\Tables\Filters\SelectFilter;
@@ -43,7 +48,7 @@ class StudentResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
-    protected static ?string $recordTitleAttribute = 'index_number';
+    // protected static ?string $recordTitleAttribute = 'index_number';
     //     public static function getGlobalSearchResultDetails(Student $record): array
 // {
 //     return [
@@ -79,9 +84,9 @@ class StudentResource extends Resource
 
                 Select::make('status')->options(Status::class)->required(),
 
-                Radio::make('program_type')
-                    ->options(ProgramType::class)->columns(2)->required(),
-                TextInput::make('telcos_number')->tel()->required(),
+                // Radio::make('program_type')
+                //     ->options(ProgramType::class)->columns(2)->required(),
+                TextInput::make('telcos_number')->tel()->required()->label('Telecel number'),
                 TextInput::make('serial_number')
                     ->required(),
                 TextInput::make('expected_completion_year')->required()->numeric(),
@@ -107,8 +112,8 @@ class StudentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('level')
                 ,
-                Tables\Columns\TextColumn::make('program_type')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                // Tables\Columns\TextColumn::make('program_type')
+                //     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('telcos_number')
                     ->label('Telcel Number'),
                 Tables\Columns\TextColumn::make('expected_completion_year')
@@ -151,8 +156,27 @@ class StudentResource extends Resource
                     })
             ])
             ->actions([
-                Tables\Actions\ViewAction::make(),
-                Tables\Actions\EditAction::make(),
+
+                ActionGroup::make([
+                    ViewAction::make(),
+                    EditAction::make(),
+                    Action::make('deactivate')
+                        ->icon('heroicon-o-user-minus')
+                        ->label('Deactivate')
+                        ->requiresConfirmation()
+                        ->action(function (Student $student) {
+                            ArchivedStudent::create($student->toArray());
+                            $student->delete();
+                        })
+                        ->successNotification(
+                            Notification::make()
+                                ->title('Student has been deactivated')
+                                ->success()
+                        ),
+                    DeleteAction::make(),
+
+                ]),
+
             ])
             ->headerActions([
                 ExportAction::make()->exporter(StudentExporter::class),
