@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('email')->unique();
             $table->string('index_number')->unique();
-            $table->foreignId('program_id')->references('id')->on('programs')->onDelete('cascade');
+            $table->foreign('program_id')->references('id')->on('programs')->onDelete('cascade');
             $table->string('telephone');
             $table->enum('level', ["100", "200", "300", "400", "500", "600"]);
             $table->string('telcos_number');
@@ -29,7 +29,7 @@ return new class extends Migration {
             $table->timestamps();
         });
 
-        Schema::enableForeignKeyConstraints();
+        //Schema::enableForeignKeyConstraints();
     }
 
     /**

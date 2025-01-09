@@ -20,13 +20,13 @@ return new class extends Migration {
             // $table->integer('top_up_duration')->nullable();
             // $table->boolean('has_top_up');
             $table->string('program_code')->nullable();
-            $table->foreignId('school_id')->references('id')->on('schools')->onDelete('cascade');
+            $table->foreign('school_id')->references('id')->on('schools')->onDelete('cascade');
 
             //$table->foreignId('school_id')->constrained()->nullOnDelete();
             $table->timestamps();
         });
 
-        Schema::enableForeignKeyConstraints();
+        //Schema::enableForeignKeyConstraints();
     }
 
     /**
