@@ -15,7 +15,6 @@ return new class extends Migration {
         Schema::create('students', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('program_id');
-
             $table->string('name');
             $table->string('email')->unique();
             $table->string('index_number')->unique();
@@ -24,8 +23,11 @@ return new class extends Migration {
             $table->enum('level', ["100", "200", "300", "400", "500", "600"]);
             // $table->enum('program_type', ["regular", "top_up"]);
             $table->enum('status', ["active", "graduating", "graduated"])->default('active');
-            $table->string('telcos_number');
-            $table->string('serial_number');
+            // $table->string('telcos_number');
+            $table->boolean('is_verified')->default(false);
+            $table->foreignId('batche_list_id')->nullable();
+
+            // $table->string('serial_number');
             $table->year('expected_completion_year');
             $table->timestamps();
         });

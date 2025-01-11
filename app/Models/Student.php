@@ -23,10 +23,10 @@ class Student extends Model
         'telephone',
         'level',
         'program_type',
-        'telcos_number',
-        'serial_number',
         'status',
         'expected_completion_year',
+        'is_verified',
+        'batche_list_id'
     ];
 
     /**
@@ -37,11 +37,17 @@ class Student extends Model
     protected $casts = [
         'id' => 'integer',
         'program_id' => 'integer',
+        'batche_list_id' => 'integer',
     ];
 
     public function program(): BelongsTo
     {
         return $this->belongsTo(Program::class);
+    }
+
+    public function batcheList(): BelongsTo
+    {
+        return $this->belongsTo(BatcheList::class);
     }
 
     protected static function booted()

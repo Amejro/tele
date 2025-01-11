@@ -21,8 +21,8 @@ return new class extends Migration {
             $table->foreign('program_id')->references('id')->on('programs')->onDelete('cascade');
             $table->string('telephone');
             $table->enum('level', ["100", "200", "300", "400", "500", "600"]);
-            $table->string('telcos_number');
-            $table->string('serial_number');
+            $table->boolean('is_verified')->default(false);
+            $table->foreignId('batche_list_id')->nullable();
             $table->year('expected_completion_year');
             $table->timestamp('registered_at')->nullable(); // This is the date the student was registered on the system
             $table->timestamp('last_updated_at')->nullable(); // This is the date the student was last updated on the system

@@ -2,15 +2,18 @@
 
 namespace App\Filament\Resources;
 
+use App\Models\BatcheList;
 use Filament\Forms;
 use Filament\Tables;
 use App\Models\School;
 use App\Models\Student;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Forms\Form;
 use Filament\Tables\Table;
+
+
 use App\Models\ArchivedStudent;
-
-
 use Filament\Resources\Resource;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Filters\Filter;
@@ -31,6 +34,7 @@ use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Actions\ImportAction;
 use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Wizard\Step;
 use Illuminate\Contracts\Support\Htmlable;
 use Filament\Forms\Components\MarkdownEditor;
@@ -67,29 +71,47 @@ class StudentResource extends Resource
                     ->required(),
                 TextInput::make('index_number')
                     ->required(),
-                Select::make('program_id')
-                    ->relationship('program', 'name')
-                    ->required(),
                 TextInput::make('telephone')
                     ->tel()
                     ->required(),
 
-                // Select::make('name')
-                //     ->model(School::class)
-                //     ->label('School')
-                // ,
+                Select::make('program_id')
+                    ->relationship('program', 'name')
+                    ->required(),
 
                 Select::make('level')->options(Level::class)
                     ->required(),
 
+                Select::make('batche_list_id')
+                    ->label('Caller number')
+                    ->relationship('batcheList', 'caller_number')
+                    ->live()
+                    ->afterStateUpdated(function (Get $get, Set $set) {
+                        $SN = BatcheList::find($get('batche_list_id'))->serial_number;
+
+                        return $set('serial_number', $SN);
+                    })
+                    ->required(),
+
+                Forms\Components\Placeholder::make('serial_number')
+
+                    ->content(function (Get $get, $record) {
+
+                        if ($record || $get('batche_list_id')) {
+                            $SN = BatcheList::find($get('batche_list_id'))->serial_number;
+
+                            return $SN;
+                        }
+                    }),
+
                 Select::make('status')->options(Status::class)->required(),
 
-                // Radio::make('program_type')
-                //     ->options(ProgramType::class)->columns(2)->required(),
-                TextInput::make('telcos_number')->tel()->required()->label('Telecel number'),
-                TextInput::make('serial_number')
-                    ->required(),
                 TextInput::make('expected_completion_year')->required()->numeric(),
+                Toggle::make('is_verified')
+                    ->hidden(function ($record) {
+                        return !$record;
+                    })
+
             ]);
     }
 
@@ -103,7 +125,7 @@ class StudentResource extends Resource
                 Tables\Columns\TextColumn::make('email')
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('index_number')
-                // ->searchable()
+                    ->searchable()
                 ,
                 Tables\Columns\TextColumn::make('program.name')
                     ->numeric(),
@@ -112,16 +134,15 @@ class StudentResource extends Resource
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('level')
                 ,
-                // Tables\Columns\TextColumn::make('program_type')
-                //     ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('telcos_number')
-                    ->label('Telcel Number'),
+
                 Tables\Columns\TextColumn::make('expected_completion_year')
-
+                    ->label('Completion year')
                 ,
+                Tables\Columns\TextColumn::make('batcheList.caller_number')
+                    ->label('Caller Number'),
+                Tables\Columns\IconColumn::make('is_verified')
+                    ->boolean(),
 
-                Tables\Columns\TextColumn::make('serial_number')
-                ,
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
@@ -131,6 +152,7 @@ class StudentResource extends Resource
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 SelectFilter::make('program')
                     ->relationship('program', 'name')

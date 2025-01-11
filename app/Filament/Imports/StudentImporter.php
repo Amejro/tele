@@ -18,13 +18,13 @@ class StudentImporter extends Importer
             ImportColumn::make('name'),
             ImportColumn::make('index_number'),
             ImportColumn::make('program')->relationship(resolveUsing: 'name'),
-            ImportColumn::make('telcos_number'),
+            // ImportColumn::make('telcos_number'),
             ImportColumn::make('email'),
             ImportColumn::make('telephone'),
             ImportColumn::make('level'),
             ImportColumn::make('expected_completion_year'),
             // ImportColumn::make('program_type'),
-            ImportColumn::make('serial_number'),
+            // ImportColumn::make('serial_number'),
         ];
     }
 
